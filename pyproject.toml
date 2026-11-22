@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dupont"
+version = "0.1.0"
+description = "CCF line masks from an observed and a synthetic spectrum (lines in both, VALD identification, RV-information weights, telluric-free)"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Sophie Stucki" }, { name = "Khaled Al Moulla" }]
+requires-python = ">=3.9"
+dependencies = ["numpy", "scipy", "pandas", "astropy", "matplotlib"]
+
+[project.optional-dependencies]
+disc = ["sunsim @ git+https://github.com/sophiestucki/sunsim.git"]   # disc_integrate (SunSim spectroscopic mode)
+flatten = ["loguru"]          # plus SNT: https://github.com/iastro-pt/Spectra-Normalization-Tool
+tellurics = ["hitran-api"]    # hapi, only to compute the HITRAN optical depths
+test = ["pytest"]
+all = ["sunsim @ git+https://github.com/sophiestucki/sunsim.git", "loguru", "hitran-api", "pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+dupont = ["data/masks/*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
